@@ -109,9 +109,13 @@ mvn archetype:generate -DgroupId=com.nilangpatel.worldgdp -DartifactId=worldgdp 
 
 - You will see `index.jsp` added by default while creating the default project structure. You must delete it as, in this application, we will use Thymeleaf—another template engine to develop the landing page.
 
-
-
 ---
+
+## Check maven dependency
+
+```bash
+mvn dependency:tree
+```
 
 
 
@@ -119,14 +123,470 @@ mvn archetype:generate -DgroupId=com.nilangpatel.worldgdp -DartifactId=worldgdp 
 
 ```xml
         <!-- ADD SUPPORT FOR AUTOMATIC RELOADING -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+
+        <!-- ADD SUPPORT FOR SPRING BOOT ACTUATOR -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+```
+
+## JUnit 5 Dependencies
+
+In order to kick start Junit 5 in Maven, following three dependencies/plugins
+are required -
+
+1. junit-jupiter-api - This dependency is required because it defines the API
+   that we need to write Junit 5 tests.
+
+2. junit-jupiter-engine - This dependency is required because it is the
+   implementation of the junit-platform-engine API for JUnit 5. It is responsible
+   for the discovery and execution of Junit 5 tests.
+
+3. maven-surefire-plugin - This plugin is required because it is needed for
+   tests to be executed during the maven build.
+
+It also requires Java 8 or higher versions.
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSche
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.hubberspot</groupId>
+  <artifactId>junit5-maven-starter</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <properties>
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                <maven.compiler.source>1.8</maven.compiler.source>
+                <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
+                <junit.jupiter.version>5.3.2</junit.jupiter.version>
+        </properties>
+        <dependencies>
+                <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-api</artifactId>
+                        <version>${junit.jupiter.version}</version>
+                        <scope>test</scope>
+                </dependency>
+                <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-engine</artifactId>
+                        <version>${junit.jupiter.version}</version>
+                        <scope>test</scope>
+                </dependency>
+        </dependencies>
+        <build>
+                <plugins>
+                        <!-- JUnit 5 requires Surefire version 2.22.1 or higher -->
+                        <plugin>
+                                <artifactId>maven-surefire-plugin</artifactId>
+                                <version>2.22.1</version>
+                        </plugin>
+                </plugins>
+        </build>
+</project>
+```
+
+Note: In junit 5.4, you only need to add `junit-jupiter` aggregator artifact is enough
+
+[Mockito and JUnit 5 - Using ExtendWith | Baeldung](https://www.baeldung.com/mockito-junit-5-extension)
+
+
+
+### @ParameterizedTest with junit-jupiter-params
+
+Maven - In order to use parameterized tests, you need to add a dependency for
+
+`junit-jupiter-params` to maven project. Just add below dependency to
+pom.xml which we created in our earlier lesson (Junit 5 Integration with
+Maven) - https://www.educative.io/collection/page/4753235730497536/569341723751219
+2/5071437253574656.
+
+```xml
+<dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <version>${junit.jupiter.version}</version>
+        <scope>test</scope>
+</dependency>
+```
+
+
+
+### [Difference between junit-jupiter-api and junit-jupiter-engine](https://stackoverflow.com/questions/48448331/difference-between-junit-jupiter-api-and-junit-jupiter-engine)
+
+#### `junit-jupiter` aggregator artifact
+
+[JUnit 5.4 provides](https://hub.packtpub.com/junit-5-4-released-with-an-aggregate-artifact-for-reducing-your-maven-and-gradle-files/) much simpler Maven configuration if your intent is to write JUnit 5 tests. Simply specify the aggregate artifact named [`junit-jupiter`](https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter).
+
+```xml
+<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <version>5.9.1</version>
+    <scope>test</scope>
+</dependency>
+```
+
+As an aggregate, this artifact in turn pulls the following three artifacts automatically, for your convenience:
+
+- [`junit-jupiter-api`](https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api) (a compile dependency)
+- [`junit-jupiter-params`](https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params) (a compile dependency)
+- [`junit-jupiter-engine`](https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine) (a runtime dependency)
+  - `junit-jupiter-api` is included as a sub-dependency in `junit-jupiter-engine` Maven repository. So you'll only really need to add `junit-jupiter-engine` to get both
+
+#### Legacy tests Junit 3, 4 with `junit-vintage-engine`
+
+If your project has JUnit 3 or 4 tests that you want to continue to run, add another dependency for the *JUnit Vintage Engine*, [`junit-vintage-engine`](https://mvnrepository.com/artifact/org.junit.vintage/junit-vintage-engine). See [tutorial by IBM](https://developer.ibm.com/tutorials/j-introducing-junit5-part2-vintage-jupiter-extension-model/).
+
+```xml
+<!-- https://mvnrepository.com/artifact/org.junit.vintage/junit-vintage-engine -->
+<dependency>
+    <groupId>org.junit.vintage</groupId>
+    <artifactId>junit-vintage-engine</artifactId>
+    <version>5.9.1</version>
+    <scope>test</scope>
+</dependency>
+```
+
+Conclusion:
+
+- You need both `junit-jupiter-api` and `junit-jupiter-engine` to write and run JUnit5 tests
+- You only need `junit-vintage-engine` if (a) you are running with JUnit5 **and** (b) your test cases use JUnit4 constructs/annotations/rules etc
+
+## Junit 5 and mockito
+
+### The Difference Between mockito-core and mockito-all
+
+[The Difference Between mockito-core and mockito-all | Baeldung](https://www.baeldung.com/mockito-core-vs-mockito-all)
+
+**[The *mockito-core* artifact](https://search.maven.org/artifact/org.mockito/mockito-core) is Mockito's main artifact.** Specifically, it contains both the API and the implementation of the library. => Use it
+
+Of course, *mockito-core* has some dependencies like *hamcrest* and *objenesis* that Maven downloads separately, but *mockito-all* is **an out-dated dependency** that bundles Mockito as well as its required dependencies. => don't use
+
+The latest GA version of [*mockito-all*](https://search.maven.org/artifact/org.mockito/mockito-all) is a 1.x version released in 2014. **Newer versions of Mockito don't release *mockito-all* anymore**.
+
+
+
+### Configuration
+
+```xml
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-core</artifactId>
+    <version>3.3.3</version>
+</dependency>
+```
+
+=> spring-boot-starter-test also include mockito-junit-jupiter:jar:3.3.3 and junit-jupiter:jar:5.6.2
+
+check dependency of spring boot and mockito
+
+```bash
+[INFO] +- org.springframework.boot:spring-boot-starter-test:jar:2.3.0.RELEASE:test
+[INFO] |  +- org.springframework.boot:spring-boot-test:jar:2.3.0.RELEASE:test
+[INFO] |  +- org.springframework.boot:spring-boot-test-autoconfigure:jar:2.3.0.RELEASE:test
+[INFO] |  +- com.jayway.jsonpath:json-path:jar:2.4.0:test
+[INFO] |  |  \- net.minidev:json-smart:jar:2.3:compile
+[INFO] |  |     \- net.minidev:accessors-smart:jar:1.2:compile
+[INFO] |  +- jakarta.xml.bind:jakarta.xml.bind-api:jar:2.3.3:compile
+[INFO] |  |  \- jakarta.activation:jakarta.activation-api:jar:1.2.2:compile
+[INFO] |  +- org.assertj:assertj-core:jar:3.16.1:test
+[INFO] |  +- org.hamcrest:hamcrest:jar:2.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter:jar:5.6.2:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-api:jar:5.6.2:test
+[INFO] |  |  |  +- org.apiguardian:apiguardian-api:jar:1.1.0:test
+[INFO] |  |  |  +- org.opentest4j:opentest4j:jar:1.2.0:test
+[INFO] |  |  |  \- org.junit.platform:junit-platform-commons:jar:1.6.2:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-params:jar:5.6.2:test
+[INFO] |  |  \- org.junit.jupiter:junit-jupiter-engine:jar:5.6.2:test
+[INFO] |  |     \- org.junit.platform:junit-platform-engine:jar:1.6.2:test
+[INFO] |  +- org.mockito:mockito-junit-jupiter:jar:3.3.3:test
+[INFO] |  +- org.skyscreamer:jsonassert:jar:1.5.0:test
+[INFO] |  |  \- com.vaadin.external.google:android-json:jar:0.0.20131108.vaadin1:test
+[INFO] |  +- org.springframework:spring-test:jar:5.2.6.RELEASE:test
+[INFO] |  \- org.xmlunit:xmlunit-core:jar:2.7.0:test
+[INFO] +- org.mockito:mockito-core:jar:3.3.3:test
+[INFO] |  +- net.bytebuddy:byte-buddy:jar:1.10.10:compile
+[INFO] |  +- net.bytebuddy:byte-buddy-agent:jar:1.10.10:test
+[INFO] |  \- org.objenesis:objenesis:jar:2.6:test
+```
+
+**Error**: [[Solved] IllegalStateException: Could not initialize plugin MockMaker](https://howtodoinjava.com/mockito/plugin-mockmaker-error/)
+
+=> Mockito core depends on a library called **byte-buddy,** and this problem mostly occurs when mockito doesn’t find a matching byte-buddy jar version
+
+It always get version 1.10.10
+
+```xml
+        <dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>4.11.0</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
+			<groupId>net.bytebuddy</groupId>
+			<artifactId>byte-buddy</artifactId>
+			<version>1.12.19</version>
+		</dependency>
+```
+
+### Building the Test Class with @Mock
+
+[Mockito and JUnit 5 - Using ExtendWith | Baeldung](https://www.baeldung.com/mockito-junit-5-extension)
+
+Let’s build our test class and attach the Mockito extension to it:
+
+```java
+@ExtendWith(MockitoExtension.class)
+class UserServiceUnitTest {
+
+    UserService userService;
+
+    // ...
+}
+```
+
+If you use the `@Mock` annotation, you must trigger the initialization of the annotated fields. The `MockitoExtension` does this by calling the static method `MockitoAnnotations.initMocks(this)`.
+
+We can use the *@Mock* annotation to inject a mock for an instance variable that we can use anywhere in the test class:
+
+```java
+@Mock UserRepository userRepository;
+```
+
+https://www.vogella.com/tutorials/Mockito/article.html
+
+
+
+### Difference Between @Mock and @InjectMocks in Mockito
+
+[Difference Between @Mock and @InjectMocks in Mockito - GeeksforGeeks](https://www.geeksforgeeks.org/difference-between-mock-and-injectmocks-in-mockito/)
+
+> **@Mock creates a mock, and @InjectMocks creates an instance of the class and injects the mocks that are created with the @Mock annotations into this instance.**
+
+[How to Write Test Cases in Java Application using Mockito and Junit? - GeeksforGeeks](https://www.geeksforgeeks.org/how-to-write-test-cases-in-java-application-using-mockito-and-junit/?ref=gcse)
+
+
+
+## Junit 5 and spring-boot
+
+=> spring-boot-starter-test also include mockito-junit-jupiter:jar:3.3.3 and junit-jupiter:jar:5.6.2
+
+### How to properly ignore Junit 4 in Gradle and Maven
+
+[How to properly ignore Junit 4 in Gradle and Maven - DEV Community ](https://dev.to/art_ptushkin/how-to-properly-ignore-junit-4-in-gradle-and-maven-3o82)
+
+#### Maven
+
+[Spring Boot: `'junit-vintage' failed to discover tests` When Using Only JUnit5 Tests &#183; Jamie Tanna | Software Engineer](https://www.jvt.me/posts/2020/06/30/spring-boot-junit-vintage-failed-discover/)
+
+It turns out, as of 2.3.1.RELEASE, I also need to now *either* remove my `<exclusions>`:
+
+```xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-test</artifactId>
+  <version>${spring-boot.version}</version>
+</dependency>
+```
+
+Or exclude both JUnit 4 and JUnit's "Vintage" engine [which allows running both JUnit4 and JUnit5 code side-by-side](https://www.jvt.me/posts/2019/12/23/junit4-junit5-gotcha-together-maven/):
+
+
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <scope>test</scope>
+    <exclusions>
+      <!-- exclude junit 4 -->
+      <exclusion>
+        <groupId>org.junit.vintage</groupId>
+        <artifactId>junit-vintage-engine</artifactId>
+      </exclusion>
+      <exclusion>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+	  </exclusion>
+    </exclusions>
+  </dependency>
+```
+
+https://medium.com/@shaunthomas999/junit-5-jupiter-dependency-management-with-maven-in-spring-boot-application-a5e7186b30eb
+
+[How to enable JUnit 5 in new Spring Boot project - DEV Community ](https://dev.to/martinbelev/how-to-enable-junit-5-in-new-spring-boot-project-29a8)
+
+
+
+#### Gradle
+
+Having [configurations in Gradle](https://docs.gradle.org/current/dsl/org.gradle.api.artifacts.Configuration.html) it is easy to exclude a dependency in one particular place:
+
+```js
+/* for all the configurations */
+configurations {
+  all {
+    /* only junit 5 should be used */
+    exclude group: 'junit', module: 'junit'
+    exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+  }
+}
+```
+
+```js
+/* for a particular test module */
+configurations {
+  testCompile {
+  /* only junit 5 should be used */
+    exclude group: 'junit', module: 'junit'
+    exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+  }
+  testRuntime {
+    /* only junit 5 should be used */
+    exclude group: 'junit', module: 'junit'
+    exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+  }
+}
+```
+
+### Full pom.xml file
+
+[Spring Boot + JUnit 5 + Mockito - Mkyong.com](https://mkyong.com/spring-boot/spring-boot-junit-5-mockito/)
+
+[Junit 5 with Spring boot 2 - HowToDoInJava](https://howtodoinjava.com/spring-boot2/testing/junit5-with-spring-boot2/)
+
+
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mkyong.spring</groupId>
+    <artifactId>testing-junit5-mockito</artifactId>
+    <version>1.0</version>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <junit-jupiter.version>5.3.2</junit-jupiter.version>
+        <mockito.version>2.24.0</mockito.version>
+    </properties>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.0.RELEASE</version>
+    </parent>
+
+    <dependencies>
+
+        <!-- mvc -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- exclude junit 4 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- junit 5: Only mockito-core is enough, spring-boot-starter-test contains it -->
+<!--
+        <dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.9.1</version>
+			<scope>test</scope>
+		</dependency>
+-->
+
+        <!-- mockito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>3.3.3</version>
+			<scope>test</scope>
 		</dependency>
 
-		<!-- ADD SUPPORT FOR SPRING BOOT ACTUATOR -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-webmvc-core</artifactId>
+			<version>${springdoc.version}</version>
 		</dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
+```
+
+junit-jupiter-engine alse includes junit-jupiter-api OR you can use junit-jupiter
+
+### @SpringBootTest
+
+With Junit 5, we do not need `@RunWith(SpringRunner.class)` anymore. Spring tests are executed with `@ExtendWith(SpringExtension.class)` and `@SpringBootTest` and the other `@…Test` annotations are already annotated with it.
+
+
+
+Add [application.properties](http://application.properties/) in resources folder to test with Spring
+
+Every new Spring Boot project comes with an initial test inside src/test/resources that uses this annotation:
+
+```java
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class DemoApplicationTest {
+
+  @Test
+  void contextLoads() {
+  }
+
+}
 ```
