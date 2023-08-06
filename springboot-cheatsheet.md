@@ -117,11 +117,9 @@ mvn archetype:generate -DgroupId=com.nilangpatel.worldgdp -DartifactId=worldgdp 
 mvn dependency:tree
 ```
 
-
-
 ## spring-boot-devtools
 
-```xml
+```xmlag-0-1gnp6gouoag-1-1gnp6gouo
         <!-- ADD SUPPORT FOR AUTOMATIC RELOADING -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -194,8 +192,6 @@ Note: In junit 5.4, you only need to add `junit-jupiter` aggregator artifact is
 
 [Mockito and JUnit 5 - Using ExtendWith | Baeldung](https://www.baeldung.com/mockito-junit-5-extension)
 
-
-
 ### @ParameterizedTest with junit-jupiter-params
 
 Maven - In order to use parameterized tests, you need to add a dependency for
@@ -213,8 +209,6 @@ Maven) - https://www.educative.io/collection/page/4753235730497536/5693417237512
         <scope>test</scope>
 </dependency>
 ```
-
-
 
 ### [Difference between junit-jupiter-api and junit-jupiter-engine](https://stackoverflow.com/questions/48448331/difference-between-junit-jupiter-api-and-junit-jupiter-engine)
 
@@ -270,8 +264,6 @@ Of course, *mockito-core* has some dependencies like *hamcrest* and *objene
 
 The latest GA version of [*mockito-all*](https://search.maven.org/artifact/org.mockito/mockito-all) is a 1.x version released in 2014. **Newer versions of Mockito don't release *mockito-all* anymore**.
 
-
-
 ### Configuration
 
 ```xml
@@ -324,17 +316,17 @@ It always get version 1.10.10
 
 ```xml
         <dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>4.11.0</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy -->
-		<dependency>
-			<groupId>net.bytebuddy</groupId>
-			<artifactId>byte-buddy</artifactId>
-			<version>1.12.19</version>
-		</dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>4.11.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy -->
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.12.19</version>
+        </dependency>
 ```
 
 ### Building the Test Class with @Mock
@@ -363,8 +355,6 @@ We can use the *@Mock* annotation to inject a mock for an instance variable th
 
 https://www.vogella.com/tutorials/Mockito/article.html
 
-
-
 ### Difference Between @Mock and @InjectMocks in Mockito
 
 [Difference Between @Mock and @InjectMocks in Mockito - GeeksforGeeks](https://www.geeksforgeeks.org/difference-between-mock-and-injectmocks-in-mockito/)
@@ -372,8 +362,6 @@ https://www.vogella.com/tutorials/Mockito/article.html
 > **@Mock creates a mock, and @InjectMocks creates an instance of the class and injects the mocks that are created with the @Mock annotations into this instance.**
 
 [How to Write Test Cases in Java Application using Mockito and Junit? - GeeksforGeeks](https://www.geeksforgeeks.org/how-to-write-test-cases-in-java-application-using-mockito-and-junit/?ref=gcse)
-
-
 
 ## Junit 5 and spring-boot
 
@@ -399,8 +387,6 @@ It turns out, as of 2.3.1.RELEASE, I also need to now *either* remove my `<ex
 
 Or exclude both JUnit 4 and JUnit's "Vintage" engine [which allows running both JUnit4 and JUnit5 code side-by-side](https://www.jvt.me/posts/2019/12/23/junit4-junit5-gotcha-together-maven/):
 
-
-
 ```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -413,9 +399,9 @@ Or exclude both JUnit 4 and JUnit's "Vintage" engine [which allows running both
         <artifactId>junit-vintage-engine</artifactId>
       </exclusion>
       <exclusion>
-		<groupId>junit</groupId>
-		<artifactId>junit</artifactId>
-	  </exclusion>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+      </exclusion>
     </exclusions>
   </dependency>
 ```
@@ -423,8 +409,6 @@ Or exclude both JUnit 4 and JUnit's "Vintage" engine [which allows running both
 https://medium.com/@shaunthomas999/junit-5-jupiter-dependency-management-with-maven-in-spring-boot-application-a5e7186b30eb
 
 [How to enable JUnit 5 in new Spring Boot project - DEV Community ](https://dev.to/martinbelev/how-to-enable-junit-5-in-new-spring-boot-project-29a8)
-
-
 
 #### Gradle
 
@@ -462,8 +446,6 @@ configurations {
 [Spring Boot + JUnit 5 + Mockito - Mkyong.com](https://mkyong.com/spring-boot/spring-boot-junit-5-mockito/)
 
 [Junit 5 with Spring boot 2 - HowToDoInJava](https://howtodoinjava.com/spring-boot2/testing/junit5-with-spring-boot2/)
-
-
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -517,26 +499,26 @@ configurations {
         <!-- junit 5: Only mockito-core is enough, spring-boot-starter-test contains it -->
 <!--
         <dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<version>5.9.1</version>
-			<scope>test</scope>
-		</dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.1</version>
+            <scope>test</scope>
+        </dependency>
 -->
 
         <!-- mockito -->
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>3.3.3</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.3.3</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-webmvc-core</artifactId>
-			<version>${springdoc.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-webmvc-core</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -552,12 +534,13 @@ configurations {
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
+           <!-- Spring boot already includes a default configuration for running tests.
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.0</version>
             </plugin>
+           -->
 
         </plugins>
     </build>
@@ -567,11 +550,11 @@ configurations {
 
 junit-jupiter-engine alse includes junit-jupiter-api OR you can use junit-jupiter
 
+In a typical Spring Boot project, you don't need to explicitly configure the `maven-surefire-plugin` for running tests. Spring Boot already includes a default configuration for running tests.
+
 ### @SpringBootTest
 
 With Junit 5, we do not need `@RunWith(SpringRunner.class)` anymore. Spring tests are executed with `@ExtendWith(SpringExtension.class)` and `@SpringBootTest` and the other `@…Test` annotations are already annotated with it.
-
-
 
 Add [application.properties](http://application.properties/) in resources folder to test with Spring
 

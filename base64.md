@@ -1,5 +1,3 @@
-
-
 [How to base64 encode and decode from command-line - Serverlab](https://www.serverlab.ca/tutorials/linux/administration-linux/how-to-base64-encode-and-decode-from-command-line/)
 
 # How to base64 encode and decode from command-line

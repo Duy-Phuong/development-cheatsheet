@@ -2,8 +2,6 @@
 
 Run npm start
 
-
-
 ```javascript
 {
   "name": "backend",

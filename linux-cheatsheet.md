@@ -1,5 +1,3 @@
-
-
 ## Curl command
 
 [How do I post request body with Curl?](https://reqbin.com/req/c-d2nzjn3z/curl-post-body)
@@ -38,8 +36,6 @@ https://www.addictivetips.com/ubuntu-linux-tips/netstat-linux/#:~:text=To%20open
 ```bash
 $ sudo apt-get install ack-grep      [On Debian, Ubuntu and Mint]
 ```
-
-
 
 [How to Install and Use Ack Command in Linux with Examples](https://www.linuxshelltips.com/ack-command-in-linux/)
 

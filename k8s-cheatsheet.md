@@ -944,8 +944,6 @@ data:
   # key: value..
 ```
 
-
-
 # Example
 
 ## React
